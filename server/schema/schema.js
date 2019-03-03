@@ -15,15 +15,9 @@ const {
 const GraphQLBook = new GraphQLObjectType({
   name: 'Book',
   fields: () => ({
-    id: {
-      type: GraphQLID
-    },
-    name: {
-      type: GraphQLString
-    },
-    genre: {
-      type: GraphQLString
-    },
+    id: { type: GraphQLID },
+    name: { type: GraphQLString },
+    genre: { type: GraphQLString },
     author: {
       type: GraphQLAuthor,
       resolve(parent, args) {
@@ -36,15 +30,9 @@ const GraphQLBook = new GraphQLObjectType({
 const GraphQLAuthor = new GraphQLObjectType({
   name: 'Author',
   fields: () => ({
-    id: {
-      type: GraphQLID
-    },
-    name: {
-      type: GraphQLString
-    },
-    age: {
-      type: GraphQLInt
-    },
+    id: { type: GraphQLID },
+    name: { type: GraphQLString },
+    age: { type: GraphQLInt },
     books: {
       type: new GraphQLList(GraphQLBook),
       resolve(parent, args) {
@@ -62,35 +50,25 @@ const RootQuery = new GraphQLObjectType({
     book: {
       type: GraphQLBook,
       args: {
-        id: {
-          type: GraphQLID
-        }
+        id: { type: GraphQLID }
       },
-      resolve: (root, {
-        id
-      }) => Book.findById(id)
+      resolve: (root, { id }) => Book.findById(id)
     },
     booksNameLike: {
       type: new GraphQLList(GraphQLBook),
       args: {
-        name: {
-          type: GraphQLString
-        }
+        name: { type: GraphQLString }
       },
-      resolve:(root, {name}) => Book.find({
-          'name': new RegExp(`${name}`)
-        })
+      resolve: (root, { name }) => Book.find({
+        'name': new RegExp(`${name}`)
+      })
     },
     author: {
       type: GraphQLAuthor,
       args: {
-        id: {
-          type: GraphQLID
-        }
+        id: { type: GraphQLID }
       },
-      resolve: (root, {
-        id
-      }) => Author.findById(id)
+      resolve: (root, { id }) => Author.findById(id)
     },
     books: {
       type: new GraphQLList(GraphQLBook),
@@ -109,12 +87,8 @@ const mutation = new GraphQLObjectType({
     addAuthor: {
       type: GraphQLAuthor,
       args: {
-        name: {
-          type: GraphQLString
-        },
-        age: {
-          type: GraphQLInt
-        }
+        name: { type: GraphQLString },
+        age: { type: GraphQLInt }
       },
       resolve: (root, args) => new Author(args).save()
     }
@@ -122,15 +96,9 @@ const mutation = new GraphQLObjectType({
   addBook: {
     type: GraphQLBook,
     args: {
-      name: {
-        type: GraphQLString
-      },
-      genre: {
-        type: GraphQLString
-      },
-      authorID: {
-        type: GraphQLID
-      }
+      name: { type: GraphQLString },
+      genre: { type: GraphQLString },
+      authorID: { type: GraphQLID }
     },
     resolve: (root, args) => new Book(args).save()
   },

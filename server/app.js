@@ -10,6 +10,7 @@ mongoose.connection.once('open', () => {
   console.log('connected to mongoDB...')
 })
 
+//use graphqlHTTP as middleware to handle '/graphgl'
 app.use('/graphql', graphqlHTTP({
   schema,
   graphiql: true
